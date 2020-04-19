@@ -6,11 +6,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import UserRouter from './src/user/routes/UserRouter';
 import PublicRouter from './src/public/routes/PublicRouter';
+import RouterConfig from './src/app/RouterConfig';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
 const Stack = createStackNavigator();
+
+const INITIAL_ROUTE_NAME = 'Login';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -51,8 +55,9 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator headerMode='none'>
-            <Stack.Screen name="Root" component={PublicRouter} />
+          <Stack.Navigator headerMode='none' initialRouteName={INITIAL_ROUTE_NAME}>            
+            <Stack.Screen name="Home" component={UserRouter} />  
+            <Stack.Screen name="Login" component={PublicRouter} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
