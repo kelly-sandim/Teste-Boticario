@@ -41,7 +41,7 @@ export default class Login extends Component{
                     barStyle="light-content"
                 />
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../../../assets/orangeCar.png')}/>
+                    <Image style={styles.logo} source={require('../../../assets/images/B.png')}/>
                     <Text style={styles.logoText}>Liste Meus Carros!</Text>
                 </View>
                 <View style={styles.formContainer}>

@@ -10,9 +10,6 @@ import { View,
     StatusBar
 } from 'react-native';
 
-import { createAppContainer } from 'react-navigation';
-
-import UserRouter from '../../users/routes/UserRouter';
 
 export default class Login extends Component{ 
     constructor(props){
@@ -45,7 +42,7 @@ export default class Login extends Component{
                     barStyle="light-content"
                 />
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../../../assets/orangeCar.png')}/>
+                    <Image style={styles.logo} source={require('../../../assets/images/B.png')}/>
                     <Text style={styles.logoText}>Liste Meus Carros!</Text>
                 </View>
                 <View style={styles.formContainer}>
