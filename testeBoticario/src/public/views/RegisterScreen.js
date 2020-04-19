@@ -10,27 +10,30 @@ import { View,
     StatusBar
 } from 'react-native';
 
-
-export default class Login extends Component{ 
+export default class Register extends Component{
     constructor(props){
         super(props);
         this.state = {
+            TextInputName: '',
             TextInputEmail: '',
             TextInputPassword: '',
         };        
     }
-    
+
     checkTextInput = () => {
         //Handler for the Submit onPress
-        if (this.state.TextInputEmail != '') {          
-          if (this.state.TextInputPassword != '') {
-            //createAppContainer(UserRouter);
-            this.props.navigation.navigate('Home');
-          } else {
-            alert('Por favor, preencha o campo de senha!');
-          }
+        if(this.state.TextInputName != '') {
+            if (this.state.TextInputEmail != '') {          
+                if (this.state.TextInputPassword != '') {
+                    
+                } else {
+                    alert('Por favor, preencha o campo de senha!');
+                }
+            } else {
+                alert('Por favor, preencha o campo de e-mail!');
+            }
         } else {
-            alert('Por favor, preencha o campo de e-mail!');
+            alert('Por favor, preencha o campo de nome!');
         }
     };
 
@@ -38,14 +41,20 @@ export default class Login extends Component{
         return(
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <StatusBar 
-                    backgroundColor="#2e87c2"
+                    backgroundColor="#E53935"
                     barStyle="light-content"
                 />
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../../../assets/images/B.png')}/>
-                    <Text style={styles.logoText}>Liste Meus Carros!</Text>
+                    <Image style={styles.logo} source={require('../../../assets/images/B.png')}/>                                        
                 </View>
                 <View style={styles.formContainer}>
+                    <TextInput 
+                        onChangeText={TextInputName => this.setState({ TextInputName })}                    
+                        placeholder="Nome"
+                        placeholderTextColor="rgba(255,255,255,0.7)"
+                        returnKeyType="next"
+                        style={styles.input}
+                    />
                     <TextInput 
                         onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
                         placeholder="E-mail"
@@ -63,15 +72,12 @@ export default class Login extends Component{
                         secureTextEntry
                         style={styles.input} />
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.checkTextInput}>
-                        <Text style={styles.buttonText}>LOGIN</Text>
+                        <Text style={styles.buttonText}>REGISTRAR</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={styles.forgotPasswordContainer}>
-                    <TouchableOpacity onPress= { () => this.props.navigation.navigate('ForgotPassword') }><Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text></TouchableOpacity>
-                </View>
+                </View>                
                 <View style={styles.signupTextContainer}>
-                    <Text style={styles.signupText}>Não tem uma conta ainda? Então</Text>
-                    <TouchableOpacity onPress={ () => this.props.navigation.navigate('Register') }><Text style={styles.signupButton}> Registre-se</Text></TouchableOpacity>
+                    <Text style={styles.signupText}>Já possui uma conta? Então</Text>
+                    <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login') } ><Text style={styles.signupButton}> faça o Login</Text></TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
         );
@@ -80,7 +86,7 @@ export default class Login extends Component{
 
 const styles =  StyleSheet.create({
     container: {
-        backgroundColor: '#3498db',
+        backgroundColor: '#E53935',
         flex: 1,
         justifyContent: 'center'
     },
@@ -90,13 +96,9 @@ const styles =  StyleSheet.create({
         alignItems: 'center',    
     },    
     logo: {
-        width: 300,
-        height: 121
-    },
-    logoText: {
-        fontSize: 18,
-        color: 'rgba(255,255,255,0.7)'
-    },
+        width: 100,
+        height: 150
+    },    
     formContainer: {
         padding: 20
     },
@@ -109,7 +111,7 @@ const styles =  StyleSheet.create({
         borderRadius: 25
     },
     buttonContainer: {
-        backgroundColor: '#276b98',
+        backgroundColor: '#a12b28',
         paddingVertical: 15,
         borderRadius: 25
     },
