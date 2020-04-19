@@ -37,7 +37,7 @@ export default class Login extends Component{
         return(
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <StatusBar 
-                    backgroundColor="#2e87c2"
+                    backgroundColor="#E53935"
                     barStyle="light-content"
                 />
                 <View style={styles.logoContainer}>

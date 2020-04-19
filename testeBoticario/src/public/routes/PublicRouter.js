@@ -1,22 +1,29 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '../views/Login';
-import Register from '../views/Register';
-import ForgotPassword from '../views/ForgotPassword';
+import Login from '../views/LoginScreen';
+import Register from '../views/RegisterScreen';
 
-const PublicRouter = createStackNavigator({
-    Login: {
-        screen: Login
-    },
-    Register: {
-        screen: Register
-    },
-    ForgotPassword: {
-        screen: ForgotPassword
-    }
-},
-{
-    headerMode: 'none',
-});
+const Router = createStackNavigator();
+// {
+//     Login: {
+//         screen: Login
+//     },
+//     Register: {
+//         screen: Register
+//     },
+//     ForgotPassword: {
+//         screen: ForgotPassword
+//     }
+// },
+// {
+//     headerMode: 'none',
+// }
 
-export default PublicRouter;
+export default function PublicRouter() {
+    return (
+      <Router.Navigator>
+        <Router.Screen name="Login" component={Login} />
+        <Router.Screen name="Register" component={Register} />        
+      </Router.Navigator>
+    );
+}
