@@ -97,12 +97,12 @@ const styles =  StyleSheet.create({
         marginBottom: 20,
         color: '#fff',
         paddingHorizontal: 10,
-        borderRadius: 25
+        borderRadius: 5
     },
     buttonContainer: {
         backgroundColor: '#a12b28',
         paddingVertical: 15,
-        borderRadius: 25
+        borderRadius: 5
     },
     buttonText: {
         textAlign: 'center',
