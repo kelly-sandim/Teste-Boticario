@@ -30,7 +30,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={LinksScreen}
         options={{
           title: 'Sobre Mim',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-info" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-information-circle" />,
         }}
       />
     </BottomTab.Navigator>
