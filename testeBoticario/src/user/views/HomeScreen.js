@@ -4,9 +4,10 @@ import { DrawerActions} from '@react-navigation/native';
 
 import ListView from "deprecated-react-native-listview";
 
-import axios from "axios"
+import axios from "axios";
 
-import Tweet from './Tweet'
+import Tweet from './Tweet';
+
 
 const NAVBAR_HEIGHT = 64;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -124,6 +125,13 @@ export default class Home extends Component {
 
   }
 
+  clickHandler = () => {
+    //function to handle click on floating Action Button
+    //Alert.alert('Floating Button Clicked');
+    this.props.navigation.navigate('NewTweet');
+  };
+
+
   render() {
     const { clampedScroll } = this.state;
 
@@ -174,10 +182,23 @@ export default class Home extends Component {
         </TouchableOpacity>
         <Animated.View>
           <Animated.Text style={[styles.title, { opacity: navbarOpacity }]}>
-            Home
+            Página Inicial
           </Animated.Text>
           </Animated.View>
         </Animated.View>
+        <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={this.clickHandler}
+                style={styles.TouchableOpacityStyle}>
+                <Image
+                  //We are making FAB using TouchableOpacity with an image
+                  //We are using online image here
+                  source={require('../../../assets/images/newPost.png')}
+                  //You can use you project image Example below
+                  //source={require('./images/float-add-icon.png')}
+                  style={styles.FloatingButtonStyle}
+                />
+          </TouchableOpacity>
       </View>
     );
   }
@@ -231,5 +252,22 @@ const styles = StyleSheet.create({
   },
   avatar:{
     marginRight:15
-  }
+  },
+
+  TouchableOpacityStyle: {
+    position: 'absolute',
+    width: 80,
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: 30,
+  },
+
+  FloatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 80,
+    height: 80,
+    //backgroundColor:'black'
+  },
 });

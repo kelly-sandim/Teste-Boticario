@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import store from "./store";
 
+import ReplyTweet from './src/user/views/ReplyTweet';
 import UserRouter from './src/user/routes/UserRouter';
 import PublicRouter from './src/public/routes/PublicRouter';
 import RouterConfig from './src/app/RouterConfig';
@@ -56,7 +57,8 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator headerMode='none' initialRouteName={INITIAL_ROUTE_NAME}>            
+          <Stack.Navigator headerMode='none' initialRouteName={INITIAL_ROUTE_NAME}>  
+            <Stack.Screen name="NewTweet" component={ReplyTweet} />          
             <Stack.Screen name="Home" component={UserRouter} />  
             <Stack.Screen name="Login" component={PublicRouter} />
           </Stack.Navigator>

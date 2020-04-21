@@ -91,7 +91,7 @@ export default class Tweet extends React.Component {
                 <View style={{flex:0.23, borderColor:"red", borderWidth:0, alignItems:"flex-end"}}>
                   <EvilIcons  name={'retweet'} size={25} color={'rgb(136, 153, 166)'}/>
                 </View>
-                <Text style={{flex:0.5, color:"rgb(136, 153, 166)"}}>{retweetedBy} Retweeted</Text>
+                <Text style={{flex:0.5, color:"rgb(136, 153, 166)"}}>{retweetedBy} retweetou</Text>
             </View>
             : 
             true
@@ -146,6 +146,8 @@ export default class Tweet extends React.Component {
               </View>
               
               </View>
+
+              
             </View>
         </View>
        </TouchableHighlight>
@@ -272,7 +274,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderColor: "red",
     borderWidth: 0
-  }
+  },
+  
 });
 
 Tweet.propTypes = {

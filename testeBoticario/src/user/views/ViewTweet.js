@@ -18,7 +18,7 @@ import ReplyComponent from './ReplyTweet'
 import randomWords from 'random-words'
 import TweetList from './TweetList'
 
-const userImage = require('../assets/images/avatar.png');
+const userImage = require('../../../assets/images/avatar.png');
 
 export default class BoldTweet extends React.Component {
 

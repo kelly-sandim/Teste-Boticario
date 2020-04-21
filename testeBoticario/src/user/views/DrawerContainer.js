@@ -6,12 +6,12 @@ import {
   Image,
   TouchableOpacity,
   ScrollView
-} from 'react-native'
-import {NavigationActions, DrawerActions} from 'react-navigation'
+} from 'react-native';
+import {NavigationActions, DrawerActions} from '@react-navigation/native';
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class DrawerContainer extends React.Component {
 
@@ -23,7 +23,7 @@ export default class DrawerContainer extends React.Component {
         <View style={styles.top}>
           <Image
             onPress={() => this.props.navigation.navigate('Profile')}
-            source={require('../assets/images/avatar.png')}
+            source={require('../../../assets/images/avatar.png')}
             style={styles.photo}/>
           <Text style={styles.userName}>Maverick 😎 </Text>
           <Text style={styles.userHandle}>@Gbenga </Text>

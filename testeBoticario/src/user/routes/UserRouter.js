@@ -1,9 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
 import TabBarIcon from '../../../components/TabBarIcon';
 import HomeScreen from '../views/HomeScreen';
 import LinksScreen from '../views/LinksScreen';
+import DrawerContainer from '../views/DrawerContainer';
+import Profile from '../views/Profile';
+import ReplyTweet from '../views/ReplyTweet';
+import TweetList from '../views/TweetList';
+import ViewTweet from '../views/ViewTweet';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -34,6 +40,17 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
     </BottomTab.Navigator>
+  );
+}
+
+const Stack = createStackNavigator();
+export function UserRouter()
+{
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen name="NewTweet" component={ReplyTweet} />
+      <Stack.Screen name="Register" component={Register} />        
+    </Stack.Navigator>
   );
 }
 
