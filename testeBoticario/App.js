@@ -5,6 +5,7 @@ import * as Font from 'expo-font';
 import { Ionicons, Fontisto } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import store from "./store";
 
 import UserRouter from './src/user/routes/UserRouter';
 import PublicRouter from './src/public/routes/PublicRouter';

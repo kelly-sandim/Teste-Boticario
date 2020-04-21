@@ -1,406 +1,232 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, { Component } from "react";
-import { Image, 
-        Platform, 
-        StyleSheet, 
-        Text, 
-        FlatList,
-        TouchableHighlight,
-        TouchableOpacity, 
-        View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import {
-  Container,
-  Header,
-  Body,
-  Content,
-  Left,
-  Title,
-  Thumbnail,
-  Col,
-  Row,
-  Grid,
-  Icon,
-  Spinner,
-  Fab,
-  Button,
-  Footer,
-  Input,
-  Right
-} from "native-base";
+import React, { Component } from 'react';
+import { Animated, Image, Platform, StyleSheet, View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { DrawerActions} from '@react-navigation/native';
 
-import { connect } from "react-redux";
+import ListView from "deprecated-react-native-listview";
 
+import axios from "axios"
 
-import { MonoText } from '../../../components/StyledText';
+import Tweet from './Tweet'
 
-export default class HomeScreen extends Component {
+const NAVBAR_HEIGHT = 64;
+const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
+
+const AnimatedListView = Animated.createAnimatedComponent(ListView);
+
+export default class Home extends Component {
   constructor(props) {
     super(props);
+
+    const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+    const scrollAnim = new Animated.Value(0);
+    const offsetAnim = new Animated.Value(0);
+
     this.state = {
-      newTweetContent: ""
+      dataSource: [],
+      data: false,
+      dataSource: [],
+      scrollAnim,
+      offsetAnim,
+      clampedScroll: Animated.diffClamp(
+        Animated.add(
+          scrollAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1],
+            extrapolateLeft: 'clamp',
+          }),
+          offsetAnim,
+        ),
+        0,
+        NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
+      ),
     };
   }
 
-  openModal() {
-    this.props.dispatch({ type: "NEW_TWEET_MODAL_OPEN" });
-  }
+  _clampedScrollValue = 0;
+  _offsetValue = 0;
+  _scrollValue = 0;
 
-  closeModal() {
-    this.props.dispatch({ type: "NEW_TWEET_MODAL_CLOSE" });
-  }
+  componentDidMount() {
+    let ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+  })
+    /** Fetch tweets */
+    axios.get(`https://randomuser.me/api/?results=10`)
+    .then(response => {
+      
+      return response
+    })
+    .then(json => {
+      
+      const {results} = json.data
+      
+      this.setState({dataSource: ds.cloneWithRows(results), data: true})
+      
+    })
+    .catch((error) => {
+        console.log(` ${error}`)
+    });
 
-  postTweet() {
-    this.props.dispatch({
-      type: "POST_TWEET",
-      payload: {
-        user: this.props.user,
-        tweetContent: this.state.newTweetContent
-      }
+
+    this.state.scrollAnim.addListener(({ value }) => {
+      const diff = value - this._scrollValue;
+      this._scrollValue = value;
+      this._clampedScrollValue = Math.min(
+        Math.max(this._clampedScrollValue + diff, 0),
+        NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
+      );
+    });
+    this.state.offsetAnim.addListener(({ value }) => {
+      this._offsetValue = value;
     });
   }
 
-  componentWillMount() {
-    this.props.dispatch({ type: "FETCH_TWEETS" });
+  componentWillUnmount() {
+    this.state.scrollAnim.removeAllListeners();
+    this.state.offsetAnim.removeAllListeners();
   }
 
-  _keyExtractor = (item, index) => item.id;
+  _onScrollEndDrag = () => {
+    this._scrollEndTimer = setTimeout(this._onMomentumScrollEnd, 250);
+  };
 
-  _profileClick(user) {
-    this.props.navigation.navigate("Profile", user);
+  _onMomentumScrollBegin = () => {
+    clearTimeout(this._scrollEndTimer);
+  };
+
+  _onMomentumScrollEnd = () => {
+    const toValue = this._scrollValue > NAVBAR_HEIGHT &&
+      this._clampedScrollValue > (NAVBAR_HEIGHT - STATUS_BAR_HEIGHT) / 2
+      ? this._offsetValue + NAVBAR_HEIGHT
+      : this._offsetValue - NAVBAR_HEIGHT;
+
+    Animated.timing(this.state.offsetAnim, {
+      toValue,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  _renderRow = (rowData, sectionId, rowId) => {
+    return (
+      <View style={{flex:1}}>
+      <Image key={rowId} style={styles.row} source={{ uri: rowData.image }} resizeMode="cover"/>
+        <Text style={styles.rowText}>{rowData.title}</Text>
+      </View>
+    );
+  };
+  renderRow(record){
+
+    return(
+        <Tweet navigation={this.props.navigation} {...record} />
+    )
+
   }
 
-  _tweetDetails(tweet) {
-    this.props.navigation.navigate("TweetDetails", tweet);
-  }
   render() {
-    if (this.props.tweetPosted === "success") {
-      this.closeModal();
-    }
+    const { clampedScroll } = this.state;
+
+    const navbarTranslate = clampedScroll.interpolate({
+      inputRange: [0, NAVBAR_HEIGHT - STATUS_BAR_HEIGHT],
+      outputRange: [0, -(NAVBAR_HEIGHT)],
+      extrapolate: 'clamp',
+    });
+    const navbarOpacity = clampedScroll.interpolate({
+      inputRange: [0, NAVBAR_HEIGHT - STATUS_BAR_HEIGHT],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    });
+
     return (
-      <Container>
-          {this.props.newTweetModalOpen && Platform.OS === "android" ? null : (
-            <Header style={styles.topMargin}>
-              <Left>
-                <Thumbnail small source={{ uri: this.props.user.avatar }} />
-              </Left>
-              <Body>
-                <Title style={{ color: "#121212" }}>Home</Title>
-              </Body>
-              <Right>
-                <Button transparent onPress={this.openModal.bind(this)}>
-                  <Icon name="md-create" style={{ color: "#4286f4" }} />
-                </Button>
-              </Right>
-            </Header>
+      <View style={[styles.fill, {backgroundColor:"#fff"}]}>
+
+      { this.state.data ? 
+        <AnimatedListView
+          contentContainerStyle={styles.contentContainer}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow.bind(this)}
+          scrollEventThrottle={1}
+          onMomentumScrollBegin={this._onMomentumScrollBegin}
+          onMomentumScrollEnd={this._onMomentumScrollEnd}
+          onScrollEndDrag={this._onScrollEndDrag}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }],
+            { useNativeDriver: true },
           )}
+        />
 
-          <Modal
-            ref={"newTweetModal"}
-            backdrop={true}
-            style={styles.modal}
-            isOpen={this.props.newTweetModalOpen}
-            onClosed={this.closeModal.bind(this)}
-          >
-            <View
-              style={{
-                alignSelf: "flex-start",
-                alignItems: "center",
-                flexDirection: "row",
-                padding: 5,
-                paddingRight: 10
-              }}
-            >
-              <Button transparent onPress={this.closeModal.bind(this)}>
-                <Icon name="close" style={{ color: "black", fontSize: 32 }} />
-              </Button>
-              <View style={{ flex: 1 }} />
-              <Thumbnail
-                small
-                source={{
-                  uri:
-                    "https://i1.wallpaperscraft.ru/image/betmen_art_minimalizm_107658_300x240.jpg"
-                }}
-              />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                width: "100%"
-              }}
-            >
-              <Input
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  fontSize: 24,
-                  alignContent: "flex-start",
-                  justifyContent: "flex-start",
-                  textAlignVertical: "top",
-                  margin: 5
-                }}
-                multiline
-                placeholder="What's happening?"
-                onChangeText={tweet => this.setState({ newTweetContent: tweet })}
-              />
-            </View>
-            <View style={styles.modalFooter}>
-              <Button transparent small>
-                <Icon name="ios-image" />
-              </Button>
-              <Button transparent small>
-                <Icon name="ios-pin" />
-              </Button>
-              <Button transparent small>
-                <Icon name="ios-stats-outline" />
-              </Button>
-
-              <View style={{ flex: 1 }} />
-              {this.props.tweetPosted === "ongoing" ? <Spinner /> : null}
-              <Button
-                rounded
-                style={{ color: "#4286f4", height: 40, width: 94 }}
-                onPress={this.postTweet.bind(this)}
-              >
-                <Text style={{ color: "white" }}>Tweet</Text>
-              </Button>
-            </View>
-          </Modal>
-          <Content style={{ backgroundColor: "white" }}>
-            {this.props.fetchingTweets ? (
-              <View
-                contentContainerStyle={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Spinner color="blue" />
-              </View>
-            ) : (
-              <View style={{ justifyContent: "flex-start" }}>
-                <FlatList
-                  data={this.props.tweets}
-                  keyExtractor={this._keyExtractor}
-                  renderItem={({ item }) => (
-                    <View style={styles.tweet}>
-                      <TouchableHighlight
-                        onPress={this._profileClick.bind(this, item.user)}
-                        underlayColor="white"
-                        activeOpacity={0.75}
-                      >
-                        <View style={{ flex: 1, flexDirection: "row" }}>
-                          <Thumbnail source={{ uri: item.user.avatar }} />
-                          <View
-                            style={{
-                              flexDirection: "column",
-                              justifyContent: "flex-start"
-                            }}
-                          >
-                            <Text
-                              style={{
-                                paddingLeft: 15,
-                                fontWeight: "bold",
-                                fontSize: 20
-                              }}
-                            >
-                              {item.user.name}
-                            </Text>
-
-                            <Text
-                              style={{
-                                paddingLeft: 15,
-                                color: "#aaa",
-                                fontSize: 16
-                              }}
-                            >
-                              {"@" + item.user.username}
-                            </Text>
-                          </View>
-                        </View>
-                      </TouchableHighlight>
-                      <Text style={styles.tweetText}>{item.tweetContent}</Text>
-                      <View style={styles.tweetFooter}>
-                        <View style={styles.footerIcons}>
-                          <Button
-                            transparent
-                            dark
-                            onPress={this._tweetDetails.bind(this, item)}
-                          >
-                            <Icon name="ios-text-outline" />
-                            <Text style={styles.badgeCount}>{item.replies}</Text>
-                          </Button>
-                        </View>
-                        <View style={styles.footerIcons}>
-                          <Button transparent dark>
-                            <Icon name="ios-repeat" />
-                            <Text style={styles.badgeCount}>{item.retweets}</Text>
-                          </Button>
-                        </View>
-                        <View style={styles.footerIcons}>
-                          <Button transparent dark>
-                            <Icon name="ios-heart-outline" />
-                            <Text style={styles.badgeCount}>{item.likes}</Text>
-                          </Button>
-                        </View>
-                        <View style={styles.footerIcons}>
-                          <Button transparent dark>
-                            <Icon name="ios-mail-outline" />
-                          </Button>
-                        </View>
-                      </View>
-                    </View>
-                  )}
-                />
-                {this.state.newTweetModalOpen ? null : (
-                  <Fab
-                    position="bottomRight"
-                    style={{ backgroundColor: "#4286f4", zIndex: -1 }}
-                    onPress={this.openModal.bind(this)}
-                    ref={"FAB"}
-                  >
-                    <Icon name="md-create" />
-                  </Fab>
-                )}
-              </View>
-            )}
-          </Content>
-
-          {/* <View tabLabel="Search">
-            <Text>Search</Text>
-          </View>
-          <View tabLabel="Messages">
-            <Text>Messages</Text>
-          </View> */}
-        </Container>
+        :             
+        <View style={[styles.container, styles.horizontal]}>                
+            <ActivityIndicator size="small" color="rgb(29, 161, 242)" />
+        </View> 
+    }
+        <Animated.View style={[styles.navbar, { transform: [{ translateY: navbarTranslate }] }]}>
+        <TouchableOpacity style={styles.avatar}>
+          <Image
+          onPress={() => this.props.dispatch(DrawerActions.openDrawer()) }
+          source={require('../../../assets/images/avatar.png')}
+          style={{width:35,height:35, borderRadius:50,marginTop:5,marginLeft:25}}
+          />
+        </TouchableOpacity>
+        <Animated.View>
+          <Animated.Text style={[styles.title, { opacity: navbarOpacity }]}>
+            Home
+          </Animated.Text>
+          </Animated.View>
+        </Animated.View>
+      </View>
     );
   }
-}
-
-HomeScreen.navigationOptions = {
-  header: null,
-};
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    justifyContent: 'center',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
   },
-  contentContainer: {
-    paddingTop: 30,
+  fill: {
+    flex: 1,
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
+  navbar: {
     position: 'absolute',
-    bottom: 0,
+    top: 0,
     left: 0,
     right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
     alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
+    backgroundColor: '#ffffff',
+    borderBottomColor: '#dedede',
+    borderBottomWidth: 0,
+    height: NAVBAR_HEIGHT,
+    justifyContent: "flex-start",
+    elevation:8,
+    flex: 1, flexDirection: 'row'
+    //paddingTop: STATUS_BAR_HEIGHT,
   },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
+  contentContainer: {
+    paddingTop: NAVBAR_HEIGHT,
   },
-  navigationFilename: {
-    marginTop: 5,
+  title: {
+    color: '#292929',
+    fontWeight:"bold"
   },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
+  row: {
+    height: 300,
+    width: null,
+    marginBottom: 1,
+    padding: 16,
+    backgroundColor: 'transparent',
   },
-  helpLink: {
-    paddingVertical: 15,
+  rowText: {
+    color: 'white',
+    fontSize: 18,
   },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
+  avatar:{
+    marginRight:15
+  }
 });
