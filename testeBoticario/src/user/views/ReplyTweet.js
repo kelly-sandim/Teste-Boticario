@@ -21,15 +21,15 @@ export default class ReplyComponent extends Component {
                 <View style={styles.inner} >        
                     <TextInput
                         multiline={true}
-                        numberOfLines={0}
+                        numberOfLines={5}
                         //disableFullscreenUI={true}
-
+                        maxLength = {280}
                         onFocus={()=> this.setState({isFocused:true})}
                         
                         underlineColorAndroid='transparent' // remove automatic android black bottom border
                         style={[styles.input, {borderBottomColor: isFocused ? 'rgb(29, 161, 242)':'rgb(136, 153, 166)',}]}
 
-                        placeholder="Tweet your reply"
+                        placeholder="No que você está pensando agora?"
                         placeholderTextColor="rgb(136, 153, 166)"
                         />
                 </View>
@@ -40,8 +40,8 @@ export default class ReplyComponent extends Component {
 
 const styles = StyleSheet.create({
 
-    container: {padding:5,width:"100%", elevation:8, height:50, backgroundColor:"rgb(27, 42, 51)"},
+    container: {padding:5,width:"100%", elevation:8, height:"100%", backgroundColor:"#f5f5f5"},
     inner: {flex:1, marginLeft:2.5, marginRight:2.5},
-    input: {height:40,width:'100%',marginTop:0,color:'white',  borderBottomWidth:1}
+    input: {height:400,width:'100%',marginTop:0,color:'#f5f5f5',  borderBottomWidth:1}
 
 })
