@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Image, Platform, StyleSheet, View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Animated, Image, Platform, StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, StatusBar } from 'react-native';
 import { DrawerActions} from '@react-navigation/native';
 
 import ListView from "deprecated-react-native-listview";
@@ -140,7 +140,10 @@ export default class Home extends Component {
 
     return (
       <View style={[styles.fill, {backgroundColor:"#fff"}]}>
-
+        <StatusBar 
+          backgroundColor="#ffffff"
+          barStyle="dark-content"
+        />
       { this.state.data ? 
         <AnimatedListView
           contentContainerStyle={styles.contentContainer}
