@@ -91,11 +91,11 @@ export default class Profile extends Component {
     });
     var headColor2 = this.state.scrollY.interpolate({
         inputRange: [0, 20, 40, 60, 800],
-        outputRange: ["transparent","transparent","transparent","white", "white"]
+        outputRange: ["transparent","transparent","transparent","#E53935", "#E53935"]
       });
       var displayColor = this.state.scrollY.interpolate({
         inputRange: [0, 20, 40, 60, 800],
-        outputRange: ["transparent","transparent","transparent","#292929", "#292929"]
+        outputRange: ["transparent","transparent","transparent","white", "white"]
       });
     var harot = this.state.scrollY.interpolate({
       inputRange: [0, 100],
@@ -122,12 +122,11 @@ export default class Profile extends Component {
               <Animated.View style={[styles.banner, {backgroundColor: headColor,transform: [{ translateY: headMov }]}]}>
                 <View style={styles.topBannerContainer}>
                   <View style={styles.bannerImageContainer}>
-                    <Image style={[StyleSheet.absoluteFill,{resizeMode:"cover"}]} source={require('../../../assets/images/banner.png')}/>
+                    <Image style={[StyleSheet.absoluteFill, styles.imgBanner, {resizeMode:"cover"}]} source={require('../../../assets/images/banner.png')}/>
                   </View>
                   <View style={styles.info}>
                     <View style={styles.infoTop}>
-                      <Image
-                          onPress={() => this.props.navigation.navigate('DrawerClose')}
+                      <Image                          
                           source={require('../../../assets/images/avatar.png')}
                           style={styles.userPhoto}/>
                     
@@ -245,7 +244,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   menuIcon: {
-    color: "#292929",
+    color: "white",
     position: "absolute",
     top: 20,
     right: 20
@@ -279,6 +278,10 @@ const styles = StyleSheet.create({
     flex: 0.25,
     borderColor: "white",
     borderWidth: 0
+  },
+  imgBanner : {
+    width: 390,
+    height: 150
   },
   info: {
     flex: 0.75,
