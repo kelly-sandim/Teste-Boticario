@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import {
   Animated,
-  View,
-  ListView,
+  View,  
   ScrollView,
   Text,
   Dimensions, Image, StyleSheet
 } from "react-native";
 const { height, width } = Dimensions.get("window");
 import {createStackNavigator} from 'react-navigation'
+
+import ListView from "deprecated-react-native-listview";
 
 //import data from './Tweet/tweets.json'
 import Tweet from './Tweet'
@@ -19,13 +20,6 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const userImage = {
-  uri:
-    "https://pbs.twimg.com/profile_images/951903664809050114/Grfd40ih_400x400.jpg"
-};
-const userBannerImage = {
-  uri: "https://pbs.twimg.com/profile_banners/320086859/1518817459/1500x500"
-};
 
 const IMG_SRC = {
   uri: "https://pbs.twimg.com/profile_banners/320086859/1518817459/1500x500"
@@ -93,15 +87,15 @@ export default class Profile extends Component {
     });
     var headColor = this.state.scrollY.interpolate({
       inputRange: [0, 20, 40, 60, 800],
-      outputRange: ["rgb(27, 40, 54)","rgb(27, 40, 54)","rgb(27, 40, 54)","rgb(27, 40, 54)", "rgb(27, 40, 54)"]
+      outputRange: ["white","white","white","white", "white"]
     });
     var headColor2 = this.state.scrollY.interpolate({
         inputRange: [0, 20, 40, 60, 800],
-        outputRange: ["transparent","transparent","transparent","red", "red"]
+        outputRange: ["transparent","transparent","transparent","white", "white"]
       });
       var displayColor = this.state.scrollY.interpolate({
         inputRange: [0, 20, 40, 60, 800],
-        outputRange: ["transparent","transparent","transparent","white", "white"]
+        outputRange: ["transparent","transparent","transparent","#292929", "#292929"]
       });
     var harot = this.state.scrollY.interpolate({
       inputRange: [0, 100],
@@ -114,7 +108,7 @@ export default class Profile extends Component {
           <Button icon={{ name: 'arrow-back', type: 'material', size:30, style: { color: "white", } }}
                   buttonStyle={styles.backButton} onPress={() => this.props.navigation.navigate('Home')}/>
 
-          <Animated.Text style={[styles.headerName, {color:displayColor}]}>Maverick 😎</Animated.Text>
+          <Animated.Text style={[styles.headerName, {color:displayColor}]}>Kelly Sandim 👩‍💻</Animated.Text>
           <SimpleLineIcons size={20} name="options-vertical" style={styles.menuIcon}/>
         </Animated.View>
 
@@ -128,61 +122,61 @@ export default class Profile extends Component {
               <Animated.View style={[styles.banner, {backgroundColor: headColor,transform: [{ translateY: headMov }]}]}>
                 <View style={styles.topBannerContainer}>
                   <View style={styles.bannerImageContainer}>
-                    <Image style={[StyleSheet.absoluteFill,{resizeMode:"cover"}]} source={userBannerImage}/>
+                    <Image style={[StyleSheet.absoluteFill,{resizeMode:"cover"}]} source={require('../../../assets/images/banner.png')}/>
                   </View>
                   <View style={styles.info}>
                     <View style={styles.infoTop}>
                       <Image
                           onPress={() => this.props.navigation.navigate('DrawerClose')}
-                          source={userImage}
+                          source={require('../../../assets/images/avatar.png')}
                           style={styles.userPhoto}/>
                     
                       <Button
                         buttonStyle={styles.editProfileButton}
                         onPress={() => navigation.dispatch(NavigationActions.back())}
-                        title="Edit Profile"
+                        title="Editar Perfil"
                         textStyle={styles.editProfileButtonText}
                       />                     
                     </View>
                     <View style={styles.nameAndHandle}>
-                        <Text style={styles.name}>Maverick 😎</Text>
-                        <Text style={styles.handle}>@Gbenga</Text>
+                        <Text style={styles.name}>Kelly Sandim 👩‍💻</Text>
+                        <Text style={styles.handle}>@SandimKelly</Text>
                     </View>
                     <View style={styles.bio}>
                       <Text style={{
-                          color: "white"
-                        }}>Software Architect | CTO @betagrade & 360NEEDS GROUP Software Architect | CTO @betagrade & 360NEEDS GROUP</Text>
+                          color: "#292929"
+                        }}>Bacharela em Ciência da Computação (UFMS) | Desenvolvedora FullStack Júnior pela Neuroteks</Text>
                     </View>
                     <View style={styles.cityAndLinkContainer}>
                       <SimpleLineIcons
                       name={'location-pin'}
                       size={14}
                       color={'rgb(136, 153, 166)'}>
-                        <Text style={styles.city}> Lagos, Nigeria</Text>
+                        <Text style={styles.city}> Campo Grande, MS - Brasil</Text>
                       </SimpleLineIcons>
-                      <Ionicons
-                      name={'ios-link-outline'}
+                      <SimpleLineIcons
+                      name={'link'}
                       size={18}
                       style={{marginLeft:15}}
                       color={'rgb(136, 153, 166)'}>                     
-                        <Text style={styles.link}> medium.com/@gbenga</Text>
-                      </Ionicons>
+                        <Text style={styles.link}> github.com/kelly-sandim</Text>
+                      </SimpleLineIcons>
                     </View>
                     <View style={styles.dobContainer}>
                         <MaterialCommunityIcons
                         name={'airballoon'}
                         size={14}     
                         color={'rgb(136, 153, 166)'}/>
-                        <Text style={styles.dob}>Born on June 21</Text>
+                        <Text style={styles.dob}>Nascida em 1 de abril de 1995</Text>
                     </View>
                     <View style={styles.followingAndFollowersContainer}>
                         <View style={styles.followingContainer}>
-                          <Text style={styles.followingCount}>970</Text>
-                          <Text style={styles.followingText}>Following</Text>
+                          <Text style={styles.followingCount}>255 </Text>
+                          <Text style={styles.followingText}>Seguindo</Text>
                         </View>
                         <View style={styles.followersContainer}>
-                          <Text style={styles.followersCount}>1,325  </Text>
-                          <Text style={styles.followersText}> Followers</Text>
+                          <Text style={styles.followersCount}>109 </Text>
+                          <Text style={styles.followersText}>Seguidores</Text>
                         </View>
                     </View>
                   </View>
@@ -229,7 +223,7 @@ const styles = StyleSheet.create({
   header: {
     minHeight: 60,
     flex: 0.1,
-    borderColor: "red",
+    borderColor: "white",
     borderWidth: 0,
     zIndex: 1000000000
   },
@@ -251,7 +245,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   menuIcon: {
-    color: "white",
+    color: "#292929",
     position: "absolute",
     top: 20,
     right: 20
@@ -266,6 +260,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   banner: {
+    backgroundColor: "white",
     position: "absolute",
     height: 380,
     borderColor: "red",
@@ -282,12 +277,12 @@ const styles = StyleSheet.create({
   },
   bannerImageContainer: {
     flex: 0.25,
-    borderColor: "red",
+    borderColor: "white",
     borderWidth: 0
   },
   info: {
     flex: 0.75,
-    borderColor: "blue",
+    borderColor: "white",
     flexDirection: "column",
     borderWidth: 0
   },
@@ -301,15 +296,15 @@ const styles = StyleSheet.create({
     paddingRight: 15
   },
   editProfileButton: {
-    backgroundColor: "transparent",
-    borderColor: "rgb(29, 161, 242)",
+    backgroundColor: "#E53935",
+    borderColor: "#E53935",
     borderWidth: 1,
     borderRadius: 25,
     padding: 6,
     width: 100
   },
   editProfileButtonText: {
-    color: "rgb(136, 153, 166)",
+    color: "white",
     fontWeight: "bold",
     backgroundColor: "transparent",
     fontSize: 14
@@ -321,7 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 15
   },
-  name: { color: "white", fontWeight: "bold", fontSize: 18 },
+  name: { color: "#292929", fontWeight: "bold", fontSize: 18 },
   handle: { color: "rgb(136, 153, 166)", fontWeight: "bold", fontSize: 14 },
   bio: {
     flexDirection: "column",
@@ -330,13 +325,13 @@ const styles = StyleSheet.create({
     paddingLeft: 15
   },
   cityAndLinkContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    padding: 5,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: 5,    
     paddingLeft: 15
   },
-  city: { color: "rgb(29, 161, 242)", fontSize: 14, marginLeft: 15 },
-  link: { color: "rgb(29, 161, 242)", fontSize: 14, marginLeft: 15 },
+  city: { color: "#E53935", fontSize: 14 },
+  link: { color: "#E53935", fontSize: 14 },
   dobContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -355,14 +350,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginRight: 15
   },
-  followingCount: { color: "white", fontWeight: "bold" },
+  followingCount: { color: "#292929", fontWeight: "bold" },
   followingText: {
     color: "rgb(136, 153, 166)",
     fontWeight: "300",
     marginLeft: 5
   },
   followersContainer: { flexDirection: "row" },
-  followersCount: { color: "white", fontWeight: "bold" },
+  followersCount: { color: "#292929", fontWeight: "bold" },
   followersText: {
     color: "rgb(136, 153, 166)",
     fontWeight: "300",
@@ -374,7 +369,7 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     zIndex: 1000000000000,
     borderWidth: 0,
-    borderColor: "black",
+    borderColor: "#292929",
     resizeMode: "cover"
   }
 });

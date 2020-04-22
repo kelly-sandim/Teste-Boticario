@@ -5,7 +5,6 @@ import * as React from 'react';
 import TabBarIcon from '../../../components/TabBarIcon';
 import HomeScreen from '../views/HomeScreen';
 import LinksScreen from '../views/LinksScreen';
-import DrawerContainer from '../views/DrawerContainer';
 import Profile from '../views/Profile';
 import ReplyTweet from '../views/ReplyTweet';
 import TweetList from '../views/TweetList';
@@ -32,13 +31,13 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Profile"
+        component={Profile}
         options={{
-          title: 'Sobre Mim',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-information-circle" />,
+          title: 'Meu Perfil',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
         }}
-      />
+      />      
     </BottomTab.Navigator>
   );
 }
@@ -60,7 +59,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Página Inicial';
-    case 'Links':
-      return 'Sobre Mim';
+    case 'Profile':
+      return 'Meu Perfil';    
   }
 }

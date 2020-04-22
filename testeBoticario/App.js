@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
-import { Ionicons, Fontisto } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, SimpleLineIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -10,7 +10,7 @@ import store from "./store";
 
 import HomeScreen from './src/user/views/HomeScreen';
 import DrawerContainer from './src/user/views/DrawerContainer';
-import Profile from './src/user/views/Profile';
+
 import ReplyTweet from './src/user/views/ReplyTweet';
 import UserRouter from './src/user/routes/UserRouter';
 import PublicRouter from './src/public/routes/PublicRouter';
@@ -64,27 +64,12 @@ export default function App(props) {
           <Stack.Navigator headerMode='none' initialRouteName={INITIAL_ROUTE_NAME}>  
             <Stack.Screen name="NewTweet" component={ReplyTweet} />          
             <Stack.Screen name="Home" component={UserRouter} />  
-            <Stack.Screen name="Login" component={PublicRouter} />
-            <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
+            <Stack.Screen name="Login" component={PublicRouter} />            
           </Stack.Navigator>
         </NavigationContainer>
       </View>
     );
   }
-}
-
-
-const Drawer = createDrawerNavigator();
-
-function DrawerNavigation() {
-  return (
-    <DrawerContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Profile" component={Profile} />
-      </Drawer.Navigator>
-    </DrawerContainer>
-  );
 }
 
 const styles = StyleSheet.create({
