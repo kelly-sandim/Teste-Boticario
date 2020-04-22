@@ -176,7 +176,7 @@ export default class Home extends Component {
         <TouchableOpacity style={styles.avatar}>
           <Image
           onPress={() => //this.props.dispatch(DrawerActions.openDrawer()) 
-                        this.props.dispatch("DrawerNavigation".DrawerActions.openDrawer())}
+                      this.props.navigation.navigate('Profile')}
           source={require('../../../assets/images/avatar.png')}
           style={{width:35,height:35, borderRadius:50,marginTop:5,marginLeft:25}}
           />
