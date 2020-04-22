@@ -175,7 +175,8 @@ export default class Home extends Component {
         <Animated.View style={[styles.navbar, { transform: [{ translateY: navbarTranslate }] }]}>
         <TouchableOpacity style={styles.avatar}>
           <Image
-          onPress={() => this.props.dispatch(DrawerActions.openDrawer()) }
+          onPress={() => //this.props.dispatch(DrawerActions.openDrawer()) 
+                        this.props.dispatch("DrawerNavigation".DrawerActions.openDrawer())}
           source={require('../../../assets/images/avatar.png')}
           style={{width:35,height:35, borderRadius:50,marginTop:5,marginLeft:25}}
           />
