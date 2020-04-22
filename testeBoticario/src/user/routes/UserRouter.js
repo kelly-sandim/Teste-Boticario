@@ -6,7 +6,7 @@ import TabBarIcon from '../../../components/TabBarIcon';
 import HomeScreen from '../views/HomeScreen';
 import LinksScreen from '../views/LinksScreen';
 import Profile from '../views/Profile';
-import ReplyTweet from '../views/ReplyTweet';
+import NewTweet from '../views/NewTweet';
 import TweetList from '../views/TweetList';
 import ViewTweet from '../views/ViewTweet';
 
@@ -47,7 +47,7 @@ export function UserRouter()
 {
   return (
     <Stack.Navigator headerMode='none'>
-      <Stack.Screen name="NewTweet" component={ReplyTweet} />
+      <Stack.Screen name="NewTweet" component={NewTweet} />
       <Stack.Screen name="Register" component={Register} />        
     </Stack.Navigator>
   );
