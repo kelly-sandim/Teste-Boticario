@@ -11,7 +11,8 @@ import { View,
     TouchableOpacity, 
     TouchableHighlight,
     KeyboardAvoidingView, 
-    StatusBar
+    StatusBar,
+    Alert
 } from 'react-native';
 
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -22,13 +23,9 @@ export default class Register extends Component{
         this.state = {
             TextInputName: '',
             TextInputEmail: '',
-            TextInputPassword: '',
-        }; 
-        this.state = {
+            TextInputPassword: '',       
             icEye: 'visibility-off', // default icon to show that password is currently hidden
-            password: '', // actual value of password entered by the user
             showPassword: true // boolean to show/hide the password 
- 
         };         
     }
 
@@ -38,23 +35,23 @@ export default class Register extends Component{
             newState = {
                 icEye: 'visibility',
                 showPassword: false,
-                password: this.state.password
+                TextInputPassword: this.state.TextInputPassword
             }
         } else {
             newState = {
                 icEye: 'visibility-off',
                 showPassword: true,
-                password: this.state.password
+                TextInputPassword: this.state.TextInputPassword
             }
         }
         // set new state value
         this.setState(newState)
     };
-    handlePassword = (password) => {
+    handlePassword = (TextInputPassword) => {
         let newState = {
             icEye: this.state.icEye,
             showPassword: this.state.showPassword,
-            password: password
+            TextInputPassword: TextInputPassword
         }
         this.setState(newState);        
     };    
@@ -64,43 +61,29 @@ export default class Register extends Component{
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (reg.test(text) === false) {
           console.log("Email is Not Correct");
-          this.setState({ email: text })
+          this.setState({ TextInputEmail: text })
           return false;
         }
         else {
-          this.setState({ email: text })
+          this.setState({ TextInputEmail: text })
           console.log("Email is Correct");
         }
     }
     
     checkTextInput = () => {
         //Handler for the Submit onPress
-        if (this.state.TextInputEmail != '') {          
-          if (this.state.TextInputPassword != '') {
-            //createAppContainer(UserRouter);
-            this.props.navigation.navigate('Home');
-          } else {
-            alert('Por favor, preencha o campo de senha!');
-          }
-        } else {
-            alert('Por favor, preencha o campo de e-mail!');
-        }
-    };
-
-    checkTextInput = () => {
-        //Handler for the Submit onPress
         if(this.state.TextInputName != '') {
             if (this.state.TextInputEmail != '') {          
                 if (this.state.TextInputPassword != '') {
-                    
+                    this.props.navigation.navigate('Login');
                 } else {
-                    alert('Por favor, preencha o campo de senha!');
+                    Alert.alert('Erro!', 'Por favor, preencha o campo de senha!');
                 }
             } else {
-                alert('Por favor, preencha o campo de e-mail!');
+                Alert.alert('Erro!', 'Por favor, preencha o campo de e-mail!');
             }
         } else {
-            alert('Por favor, preencha o campo de nome!');
+            Alert.alert('Erro!', 'Por favor, preencha o campo de nome!');
         }
     };
 
@@ -123,7 +106,7 @@ export default class Register extends Component{
                         style={styles.input}
                     />
                     <TextInput 
-                        onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
+                        onChangeText={(text) => this.validate(text)}
                         placeholder="E-mail"
                         placeholderTextColor="rgba(255,255,255,0.7)"
                         returnKeyType="next"

@@ -11,7 +11,8 @@ import { View,
     TouchableHighlight,
     TouchableOpacity, 
     KeyboardAvoidingView, 
-    StatusBar
+    StatusBar,
+    Alert
 } from 'react-native';
 
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -23,14 +24,24 @@ export default class Login extends Component{
         this.state = {
             TextInputEmail: '',
             TextInputPassword: '',
-        };  
-        this.state = {
             icEye: 'visibility-off', // default icon to show that password is currently hidden
-            password: '', // actual value of password entered by the user
             showPassword: true // boolean to show/hide the password 
- 
         };      
     }
+
+    checkTextInput = () => {
+        //Handler for the Submit onPress
+        if (this.state.TextInputEmail != '') {          
+          if (this.state.TextInputPassword != '') {
+            //createAppContainer(UserRouter);
+            this.props.navigation.navigate('Home');
+          } else {
+            Alert.alert('Por favor, preencha o campo de senha!');
+          }
+        } else {
+            Alert.alert('Por favor, preencha o campo de e-mail!');
+        }
+    };
 
     changePwdType = () => {
         let newState;
@@ -38,23 +49,23 @@ export default class Login extends Component{
             newState = {
                 icEye: 'visibility',
                 showPassword: false,
-                password: this.state.password
+                TextInputPassword: this.state.TextInputPassword
             }
         } else {
             newState = {
                 icEye: 'visibility-off',
                 showPassword: true,
-                password: this.state.password
+                TextInputPassword: this.state.TextInputPassword
             }
         }
         // set new state value
-        this.setState(newState)
+        this.setState(newState);
     };
-    handlePassword = (password) => {
+    handlePassword = (text) => {
         let newState = {
             icEye: this.state.icEye,
             showPassword: this.state.showPassword,
-            password: password
+            TextInputPassword: text
         }
         this.setState(newState);        
     };    
@@ -64,28 +75,16 @@ export default class Login extends Component{
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (reg.test(text) === false) {
           console.log("Email is Not Correct");
-          this.setState({ email: text })
+          this.setState({ TextInputEmail: text })
           return false;
         }
         else {
-          this.setState({ email: text })
+          this.setState({ TextInputEmail: text })
           console.log("Email is Correct");
         }
-    }
-    
-    checkTextInput = () => {
-        //Handler for the Submit onPress
-        if (this.state.TextInputEmail != '') {          
-          if (this.state.TextInputPassword != '') {
-            //createAppContainer(UserRouter);
-            this.props.navigation.navigate('Home');
-          } else {
-            alert('Por favor, preencha o campo de senha!');
-          }
-        } else {
-            alert('Por favor, preencha o campo de e-mail!');
-        }
     };
+    
+    
 
     render() {
         return(
@@ -98,8 +97,7 @@ export default class Login extends Component{
                     <Image style={styles.logo} source={require('../../../assets/images/B.png')}/>                    
                 </View>
                 <View style={styles.formContainer}>
-                    <TextInput 
-                        onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
+                    <TextInput                         
                         placeholder="E-mail"
                         placeholderTextColor="rgba(255,255,255,0.7)"
                         returnKeyType="next"
