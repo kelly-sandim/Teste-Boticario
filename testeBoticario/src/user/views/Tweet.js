@@ -39,7 +39,7 @@ export default class Tweet extends React.Component {
       time: "1hr",
       retweeted: [true, false].random(),
       liked: [true, false].random(),
-      retweetedBy:["Sandra", "Hannit","Michael", "Jason", "Queen"][Math.floor(Math.random()*["Sandra", "Hannit","Michael", "Jason", "Queen"].length)]
+      retweetedBy:["Você", "Hannit","Michael", "Jason", "Queen"][Math.floor(Math.random()*["Você", "Hannit","Michael", "Jason", "Queen"].length)]
     }
     this.tweetPressed = this
       .tweetPressed

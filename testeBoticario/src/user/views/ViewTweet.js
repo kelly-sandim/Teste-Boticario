@@ -29,12 +29,12 @@ export default class BoldTweet extends React.Component {
       tweet: randomWords({min: 18, max: 40}).join(" "),
       retweets:Math.floor((Math.random() * 100) + 1),
       likes:Math.floor((Math.random() * 10) + 1),
-      name:"Maverick 😎 ",
-      handle:"@Gbxnga",
+      name:"Kelly Sandim 👩‍💻 ",
+      handle:"@SandimKelly",
       time:"1h",
       retweeted:false,
       liked:false,
-      retweetedBy:["Sandra", "Hannit","Michael", "Jason", "Queen"][Math.floor(Math.random()*["Sandra", "Hannit","Michael", "Jason", "Queen"].length)]
+      retweetedBy:["Você", "Hannit","Michael", "Jason", "Queen"][Math.floor(Math.random()*["Você", "Hannit","Michael", "Jason", "Queen"].length)]
     }
     this.tweetPressed = this
       .tweetPressed

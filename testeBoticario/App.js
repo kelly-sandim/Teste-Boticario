@@ -11,7 +11,7 @@ import store from "./store";
 import HomeScreen from './src/user/views/HomeScreen';
 import DrawerContainer from './src/user/views/DrawerContainer';
 
-import ReplyTweet from './src/user/views/ReplyTweet';
+import NewTweet from './src/user/views/NewTweet';
 import UserRouter from './src/user/routes/UserRouter';
 import PublicRouter from './src/public/routes/PublicRouter';
 import RouterConfig from './src/app/RouterConfig';
@@ -62,7 +62,7 @@ export default function App(props) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator headerMode='none' initialRouteName={INITIAL_ROUTE_NAME}>  
-            <Stack.Screen name="NewTweet" component={ReplyTweet} />          
+            <Stack.Screen name="NewTweet" component={NewTweet} />          
             <Stack.Screen name="Home" component={UserRouter} />  
             <Stack.Screen name="Login" component={PublicRouter} />            
           </Stack.Navigator>
