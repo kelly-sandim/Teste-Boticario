@@ -29,7 +29,7 @@ export default class Login extends Component{
             password: '', // actual value of password entered by the user
             showPassword: true // boolean to show/hide the password 
  
-        }      
+        };      
     }
 
     changePwdType = () => {

@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { View, 
+    Dimensions,
     Text, 
     StyleSheet, 
     TextInput, 
     Image, 
     TouchableOpacity, 
+    TouchableHighlight,
     KeyboardAvoidingView, 
     StatusBar
 } from 'react-native';
+
+export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default class Register extends Component{
     constructor(props){
@@ -17,8 +23,69 @@ export default class Register extends Component{
             TextInputName: '',
             TextInputEmail: '',
             TextInputPassword: '',
-        };        
+        }; 
+        this.state = {
+            icEye: 'visibility-off', // default icon to show that password is currently hidden
+            password: '', // actual value of password entered by the user
+            showPassword: true // boolean to show/hide the password 
+ 
+        };         
     }
+
+    changePwdType = () => {
+        let newState;
+        if (this.state.showPassword) {
+            newState = {
+                icEye: 'visibility',
+                showPassword: false,
+                password: this.state.password
+            }
+        } else {
+            newState = {
+                icEye: 'visibility-off',
+                showPassword: true,
+                password: this.state.password
+            }
+        }
+        // set new state value
+        this.setState(newState)
+    };
+    handlePassword = (password) => {
+        let newState = {
+            icEye: this.state.icEye,
+            showPassword: this.state.showPassword,
+            password: password
+        }
+        this.setState(newState);        
+    };    
+
+    validate = (text) => {
+        console.log(text);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(text) === false) {
+          console.log("Email is Not Correct");
+          this.setState({ email: text })
+          return false;
+        }
+        else {
+          this.setState({ email: text })
+          console.log("Email is Correct");
+        }
+    }
+    
+    checkTextInput = () => {
+        //Handler for the Submit onPress
+        if (this.state.TextInputEmail != '') {          
+          if (this.state.TextInputPassword != '') {
+            //createAppContainer(UserRouter);
+            this.props.navigation.navigate('Home');
+          } else {
+            alert('Por favor, preencha o campo de senha!');
+          }
+        } else {
+            alert('Por favor, preencha o campo de e-mail!');
+        }
+    };
 
     checkTextInput = () => {
         //Handler for the Submit onPress
@@ -64,13 +131,32 @@ export default class Register extends Component{
                         autoCapitalize="none"
                         autoCorrect={false}
                         style={styles.input} />
-                    <TextInput 
-                        onChangeText={TextInputPassword => this.setState({ TextInputPassword })}
-                        placeholder="Senha"
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        returnKeyType="go"
-                        secureTextEntry
-                        style={styles.input} />
+                    <TouchableHighlight>
+                        <View style={styles.passwordViewContainer}>
+                            <TextInput                                 
+                                placeholder="Senha"
+                                placeholderTextColor="rgba(255,255,255,0.7)"                                
+                                value={this.state.password}
+                                onChangeText={this.handlePassword}
+                                secureTextEntry={this.state.showPassword}
+                                width={SCREEN_WIDTH - 100}
+                                height={40}
+                                labelActiveColor={componentColors.password_icon_color}
+                                labelColor={componentColors.password_icon_color}
+                                placeholderColor={componentColors.password_icon_color}
+                                underlineColor={componentColors.password_icon_color}
+                                underlineActiveColor={componentColors.password_icon_color}
+                                underlineActiveHeight={2}
+                                underlineHeight={1}                                
+                                style={styles.passwordInput} />
+                            <Icon style={styles.icon}
+                                name={this.state.icEye}
+                                size={30}
+                                color={componentColors.password_icon_color}
+                                onPress={this.changePwdType}
+                            />
+                        </View>
+                    </TouchableHighlight>
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.checkTextInput}>
                         <Text style={styles.buttonText}>REGISTRAR</Text>
                     </TouchableOpacity>
@@ -103,6 +189,16 @@ const styles =  StyleSheet.create({
         padding: 20
     },
     input: {
+        height: 40,
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        marginBottom: 20,
+        color: '#fff',
+        paddingHorizontal: 10,
+        borderRadius: 5
+    },
+
+    passwordInput: {
+        flex: 1,
         height: 40,
         backgroundColor: 'rgba(255,255,255,0.2)',
         marginBottom: 20,
@@ -143,5 +239,18 @@ const styles =  StyleSheet.create({
         color: '#ffffff',
         fontSize: 16,
         fontWeight: '700'
+    },
+    passwordViewContainer: {
+        flexDirection: 'row'
+    },
+    icon: {
+        position: 'absolute',
+        top: 5,
+        right: 10
     }
 });
+
+
+export const componentColors = {
+    password_icon_color:'white',
+};
