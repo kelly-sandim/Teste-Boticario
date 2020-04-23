@@ -13,9 +13,17 @@ export default class ReplyComponent extends Component {
     constructor(){
         super()
         this.state ={
-            isFocused : false
+            isFocused : false,
+            textLength: 0,
         }
+        this.maxLength = 280;    
     }
+
+    onChangeText(text){
+        this.setState({
+          textLength: this.maxLength - text.length
+        });
+      }
 
     render(){
 
@@ -47,7 +55,11 @@ export default class ReplyComponent extends Component {
 
                         placeholder="No que você está pensando agora?"
                         placeholderTextColor="rgb(136, 153, 166)"
-                        />
+                        onChangeText={this.onChangeText.bind(this)}
+                    />
+                    <Text style={styles.counterText}>                         
+                        {this.state.textLength}/280 
+                    </Text>
                 </View>
             </View>
         )
@@ -57,12 +69,12 @@ export default class ReplyComponent extends Component {
 const styles = StyleSheet.create({
 
     container: {width:"100%", elevation:8, height:"100%", backgroundColor:"#f5f5f5"},
-    inner: {flex:1, marginLeft:2.5, marginRight:2.5},
-    input: {height:300,width:'100%',marginTop:-100,color:'#f5f5f5',  borderBottomWidth:1, padding: 10},
+    inner: {flex:1, marginLeft:2.5, marginRight:2.5, color: '#424242'},
+    input: {height:300,width:'100%',marginTop:-100,color:'#424242',  borderBottomWidth:1, padding: 10},
     header: {        
         backgroundColor: "white",
         borderBottomColor: '#dedede',
-        minHeight: 20,
+        minHeight: 30,
         flex: 0.1,
         borderColor: "white",
         borderWidth: 0,        
@@ -95,4 +107,9 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         fontSize: 14
     },
+    counterText: {
+        fontSize:10,
+        color:'#424242',
+        textAlign: 'right'
+    }
 })

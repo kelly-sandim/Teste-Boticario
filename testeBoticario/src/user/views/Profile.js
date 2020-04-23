@@ -147,19 +147,23 @@ export default class Profile extends Component {
                         }}>Bacharela em Ciência da Computação (UFMS) | Desenvolvedora FullStack Júnior pela Neuroteks</Text>
                     </View>
                     <View style={styles.cityAndLinkContainer}>
-                      <SimpleLineIcons
-                      name={'location-pin'}
-                      size={14}
-                      color={'rgb(136, 153, 166)'}>
-                        <Text style={styles.city}> Campo Grande, MS - Brasil</Text>
-                      </SimpleLineIcons>
-                      <SimpleLineIcons
-                      name={'link'}
-                      size={18}
-                      style={{marginLeft:15}}
-                      color={'rgb(136, 153, 166)'}>                     
-                        <Text style={styles.link}> github.com/kelly-sandim</Text>
-                      </SimpleLineIcons>
+                      <View style={styles.cityContainer}></View>
+                        <SimpleLineIcons
+                        name={'location-pin'}
+                        size={18}
+                        color={'rgb(136, 153, 166)'}>
+                          <Text style={styles.city}> Campo Grande, MS - Brasil</Text>
+                        </SimpleLineIcons>
+                      </View>
+                      <View style={styles.linkContainer}>
+                        <SimpleLineIcons
+                        name={'link'}
+                        size={18}
+                        style={{marginLeft:15}}
+                        color={'rgb(136, 153, 166)'}>                     
+                          <Text style={styles.link}> linkedin.com/in/kelly-sandim-41b9a115b/</Text>
+                        </SimpleLineIcons>
+                      </View>
                     </View>
                     <View style={styles.dobContainer}>
                         <MaterialCommunityIcons
@@ -180,8 +184,7 @@ export default class Profile extends Component {
                     </View>
                   </View>
 
-                </View>
-        </Animated.View>
+          </Animated.View>
       </View>
     );
   }
@@ -217,14 +220,14 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgb(20, 29, 38)"
+    backgroundColor: "#f5f5f5"
   },
   header: {
     minHeight: 60,
     flex: 0.1,
     borderColor: "white",
     borderWidth: 0,
-    zIndex: 1000000000
+    zIndex: 1000000000    
   },
   backButton: {
     backgroundColor: "transparent",
@@ -232,7 +235,7 @@ const styles = StyleSheet.create({
     top: -5,
     left: -10,
     padding: 20,
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   headerName: {
     backgroundColor: "transparent",
@@ -281,7 +284,7 @@ const styles = StyleSheet.create({
   },
   imgBanner : {
     width: 390,
-    height: 150
+    height: 135
   },
   info: {
     flex: 0.75,
@@ -329,9 +332,18 @@ const styles = StyleSheet.create({
   },
   cityAndLinkContainer: {
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",    
     padding: 5,    
     paddingLeft: 15
+  },
+  cityContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",    
+  },
+  linkContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",      
+    
   },
   city: { color: "#E53935", fontSize: 14 },
   link: { color: "#E53935", fontSize: 14 },
