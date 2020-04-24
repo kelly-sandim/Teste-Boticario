@@ -126,7 +126,8 @@ export default class Profile extends Component {
                     
                       <Button
                         buttonStyle={styles.editProfileButton}
-                        onPress={() => navigation.dispatch(NavigationActions.back())}
+                        // onPress={() => navigation.dispatch(NavigationActions.back())
+                        // }
                         title="Editar Perfil"
                         textStyle={styles.editProfileButtonText}
                       />                     

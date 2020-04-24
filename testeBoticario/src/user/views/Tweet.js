@@ -82,7 +82,10 @@ export default class Tweet extends React.Component {
 
 
     return(
-      <TouchableHighlight onPress={()=>navigation.navigate('Thread')} onPressIn={() => this.tweetPressed(true)} onPressOut={() => this.tweetPressed()}>
+      <TouchableHighlight 
+        //onPress={()=>navigation.navigate('Thread')} 
+        onPressIn={() => this.tweetPressed(true)} 
+        onPressOut={() => this.tweetPressed()}>
         <View key={thekey} style={styles.container}>
             { !isReply ? 
             <View style={styles.isReplyContainer}>
