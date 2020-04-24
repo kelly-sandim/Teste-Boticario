@@ -3,15 +3,14 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  
+  Image,  
   TouchableHighlight,
   TouchableOpacity, 
-} from 'react-native'
+} from 'react-native';
 import PropTypes from 'prop-types';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {View, Text, TextInput,StyleSheet} from 'react-native'
+import {View, TextInput,StyleSheet} from 'react-native'
 
 
 export default class ReplyComponent extends Component {
@@ -11,19 +11,15 @@ export default class ReplyComponent extends Component {
             isFocused : false
         }
     }
-
     render(){
-
         const {isFocused} = this.state
-
         return (
             <View style={styles.container}>
                 <View style={styles.inner} >        
                     <TextInput
                         multiline={true}
                         numberOfLines={0}
-                        //disableFullscreenUI={true}
-
+                        
                         onFocus={()=> this.setState({isFocused:true})}
                         
                         underlineColorAndroid='transparent' // remove automatic android black bottom border

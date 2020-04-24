@@ -229,8 +229,7 @@ const styles = StyleSheet.create({
     height: NAVBAR_HEIGHT,
     justifyContent: "flex-start",
     elevation:8,
-    flex: 1, flexDirection: 'row'
-    //paddingTop: STATUS_BAR_HEIGHT,
+    flex: 1, flexDirection: 'row'    
   },
   contentContainer: {
     paddingTop: NAVBAR_HEIGHT,
@@ -267,8 +266,7 @@ const styles = StyleSheet.create({
   FloatingButtonStyle: {
     resizeMode: 'contain',
     width: 80,
-    height: 80,
-    //backgroundColor:'black'
+    height: 80,    
   },
   logoutIcon: {
     color: "#E53935",

@@ -24,8 +24,8 @@ export default class Login extends Component{
         this.state = {
             TextInputEmail: '',
             TextInputPassword: '',
-            icEye: 'visibility-off', // default icon to show that password is currently hidden
-            showPassword: true // boolean to show/hide the password 
+            icEye: 'visibility-off', 
+            showPassword: true 
         };      
     }
 
@@ -64,8 +64,7 @@ export default class Login extends Component{
                 showPassword: true,
                 TextInputPassword: this.state.TextInputPassword
             }
-        }
-        // set new state value
+        }        
         this.setState(newState);
     };
     handlePassword = (text) => {

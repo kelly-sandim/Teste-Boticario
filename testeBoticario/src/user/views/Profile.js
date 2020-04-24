@@ -2,28 +2,22 @@ import React, { Component } from "react";
 import {
   Animated,
   View,  
-  ScrollView,
   Text,
   Dimensions, Image, StyleSheet
 } from "react-native";
 const { height, width } = Dimensions.get("window");
-import {createStackNavigator} from 'react-navigation'
 
 import ListView from "deprecated-react-native-listview";
 
-//import data from './Tweet/tweets.json'
 import Tweet from './Tweet'
 
-import { Button, Card } from "react-native-elements";
-import { StackNavigator, NavigationActions } from "react-navigation";
+import { Button } from "react-native-elements";
+import { NavigationActions } from "react-navigation";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-const IMG_SRC = {
-  uri: "https://pbs.twimg.com/profile_banners/320086859/1518817459/1500x500"
-};
 const IMG_HEIGHT = 100;
 const NAVBAR_HEIGHT = 64;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -188,8 +182,7 @@ export default class Profile extends Component {
       </View>
     );
   }
-  _handleScroll(e) {
-    // console.log(e.nativeEvent.contentOffset.y, "jvjhvhm");
+  _handleScroll(e) {    
   }
 
   renderScroll(props) {

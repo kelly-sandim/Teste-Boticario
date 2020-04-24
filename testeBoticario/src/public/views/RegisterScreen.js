@@ -24,8 +24,8 @@ export default class Register extends Component{
             TextInputName: '',
             TextInputEmail: '',
             TextInputPassword: '',       
-            icEye: 'visibility-off', // default icon to show that password is currently hidden
-            showPassword: true // boolean to show/hide the password 
+            icEye: 'visibility-off', 
+            showPassword: true 
         };         
     }
 
@@ -43,8 +43,7 @@ export default class Register extends Component{
                 showPassword: true,
                 TextInputPassword: this.state.TextInputPassword
             }
-        }
-        // set new state value
+        }        
         this.setState(newState)
     };
     handlePassword = (TextInputPassword) => {
@@ -78,8 +77,7 @@ export default class Register extends Component{
         }
     };
     
-    checkTextInput = () => {
-        //Handler for the Submit onPress
+    checkTextInput = () => {        
         if(this.state.TextInputName != '') {
             if (this.state.TextInputEmail != '') {          
                 if(this.validate())

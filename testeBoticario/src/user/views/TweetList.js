@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
-import {ScrollView, Text, ActivityIndicator, StyleSheet, View} from 'react-native'
+import { ActivityIndicator, StyleSheet, View} from 'react-native'
 import Tweet from './Tweet'
 import ListView from "deprecated-react-native-listview"
-//import data from './tweets.json'
+
 import axios from "axios"
 export default class TweetsList extends Component  {
 
     constructor(props){
         super(props)
-
-
+        
         this.state = {
             dataSource: [],
             data: false
@@ -51,19 +50,14 @@ export default class TweetsList extends Component  {
        }
 
     renderRow(record){
-
         return(
             <Tweet navigation={this.props.navigation} {...record} />
         )
-
     }
 
     render() {
-        return (
-
-            
-            <View>
-             
+        return (            
+            <View>             
                 { this.state.data ? 
                     <ListView
                         renderScrollComponent={this.props.renderScrollComponent}
@@ -75,12 +69,10 @@ export default class TweetsList extends Component  {
                     <View style={[styles.container, styles.horizontal]}>                
                         <ActivityIndicator size="small" color="rgb(29, 161, 242)" />
                     </View> 
-                }
-        
+                }        
             </View>
         )
     }
-
 }
 
 const styles = StyleSheet.create({

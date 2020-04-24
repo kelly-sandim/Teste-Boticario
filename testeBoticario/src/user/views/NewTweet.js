@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 
-import {Animated, View, ScrollView, Text, Dimensions, Image, TextInput,StyleSheet, Alert} from 'react-native';
+import {Animated, View, Text, Dimensions, TextInput,StyleSheet, Alert} from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-import { Button, Card } from "react-native-elements";
-
-const { height, width } = Dimensions.get("window");
+import { Button } from "react-native-elements";
 
 export default class ReplyComponent extends Component {
 
@@ -26,8 +22,7 @@ export default class ReplyComponent extends Component {
         });
     };
 
-    checkTextInput = () => {
-        //Handler for the Submit onPress
+    checkTextInput = () => {        
         if (this.state.TextInputTweet != '') {                    
             this.props.navigation.navigate('Home');          
         } else {
@@ -57,7 +52,6 @@ export default class ReplyComponent extends Component {
                         onChangeText={TextInputTweet => this.setState({ TextInputTweet })}                    
                         multiline={true}
                         numberOfLines={5}
-                        //disableFullscreenUI={true}
                         maxLength = {280}
                         onFocus={()=> this.setState({isFocused:true})}
                         

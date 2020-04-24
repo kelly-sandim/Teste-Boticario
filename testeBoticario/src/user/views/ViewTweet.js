@@ -6,17 +6,17 @@ import {
   Image,
   TouchableHighlight,
   TouchableOpacity,
-  ScrollView, TextInput
-} from 'react-native'
+  ScrollView
+} from 'react-native';
 
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
-import ReplyComponent from './ReplyTweet'
-import randomWords from 'random-words'
-import TweetList from './TweetList'
+import ReplyComponent from './ReplyTweet';
+import randomWords from 'random-words';
+import TweetList from './TweetList';
 
 const userImage = require('../../../assets/images/avatar.png');
 
