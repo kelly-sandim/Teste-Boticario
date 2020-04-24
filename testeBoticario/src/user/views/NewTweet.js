@@ -41,6 +41,7 @@ export default class ReplyComponent extends Component {
                             buttonStyle={styles.closeButton} onPress={() => this.props.navigation.navigate('Home')}/>
                     
                     <Button
+                        disabled={!this.state.TextInputTweet}
                         buttonStyle={styles.tweetButton}
                         onPress={this.checkTextInput}
                         title="Tweetar"
