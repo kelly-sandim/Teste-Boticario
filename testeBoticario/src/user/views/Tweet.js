@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
 });
 
 Tweet.propTypes = {
-  retweeted: PropTypes.string.isRequired
+  retweeted: PropTypes.bool.isRequired
 };
 Tweet.defaultProps = {
   name: "Anonymous",
