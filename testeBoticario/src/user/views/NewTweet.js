@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Animated, View, ScrollView, Text, Dimensions, Image, TextInput,StyleSheet} from 'react-native';
+import {Animated, View, ScrollView, Text, Dimensions, Image, TextInput,StyleSheet, Alert} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -12,7 +12,8 @@ export default class ReplyComponent extends Component {
 
     constructor(){
         super()
-        this.state ={
+        this.state = {
+            TextInputTweet: '',
             isFocused : false,
             textLength: 0,
         }
@@ -23,7 +24,16 @@ export default class ReplyComponent extends Component {
         this.setState({
           textLength: this.maxLength - text.length
         });
-      }
+    };
+
+    checkTextInput = () => {
+        //Handler for the Submit onPress
+        if (this.state.TextInputTweet != '') {                    
+            this.props.navigation.navigate('Home');          
+        } else {
+            Alert.alert('Erro!', 'Não pode Tweetar sem escrever algo!');
+        }
+    };
 
     render(){
 
@@ -37,13 +47,14 @@ export default class ReplyComponent extends Component {
                     
                     <Button
                         buttonStyle={styles.tweetButton}
-                        onPress={() => navigation.dispatch(NavigationActions.back())}
+                        onPress={this.checkTextInput}
                         title="Tweetar"
                         textStyle={styles.tweetButtonText}
                     />                   
                 </Animated.View>
                 <View style={styles.inner} >        
                     <TextInput
+                        onChangeText={TextInputTweet => this.setState({ TextInputTweet })}                    
                         multiline={true}
                         numberOfLines={5}
                         //disableFullscreenUI={true}

@@ -36,10 +36,10 @@ export default class Login extends Component{
             //createAppContainer(UserRouter);
             this.props.navigation.navigate('Home');
           } else {
-            Alert.alert('Por favor, preencha o campo de senha!');
+            Alert.alert('Erro!', 'Por favor, preencha o campo de senha!');
           }
         } else {
-            Alert.alert('Por favor, preencha o campo de e-mail!');
+            Alert.alert('Erro!', 'Por favor, preencha o campo de e-mail!');
         }
     };
 
