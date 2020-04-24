@@ -31,13 +31,20 @@ export default class Login extends Component{
 
     checkTextInput = () => {
         //Handler for the Submit onPress
-        if (this.state.TextInputEmail != '') {          
-          if (this.state.TextInputPassword != '') {
-            //createAppContainer(UserRouter);
-            this.props.navigation.navigate('Home');
-          } else {
-            Alert.alert('Erro!', 'Por favor, preencha o campo de senha!');
-          }
+        if (this.state.TextInputEmail != '') {             
+            if(this.validate())
+            {
+                if (this.state.TextInputPassword != '') {
+                    //createAppContainer(UserRouter);
+                    this.props.navigation.navigate('Home');
+                } else {
+                    Alert.alert('Erro!', 'Por favor, preencha o campo de senha!');
+                }        
+            }
+            else
+            {
+                Alert.alert('Erro!', 'Por favor, preencha um e-mail válido!');
+            }         
         } else {
             Alert.alert('Erro!', 'Por favor, preencha o campo de e-mail!');
         }
@@ -70,17 +77,25 @@ export default class Login extends Component{
         this.setState(newState);        
     };    
 
-    validate = (text) => {
+    updateEmailText = (text) => {  
+        console.log(text);      
+        let newState = {
+            TextInputEmail: text
+        }
+        this.setState(newState);        
+    };
+
+    validate = () => {
+        let text = this.state.TextInputEmail;
         console.log(text);
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(text) === false) {
-          console.log("Email is Not Correct");
-          this.setState({ TextInputEmail: text })
+        if (reg.test(String(text).toLowerCase()) === false) {
+          console.log("Email is Not Correct");          
           return false;
         }
-        else {
-          this.setState({ TextInputEmail: text })
+        else {          
           console.log("Email is Correct");
+          return true;
         }
     };
     
@@ -100,18 +115,18 @@ export default class Login extends Component{
                     <TextInput                         
                         placeholder="E-mail"
                         placeholderTextColor="rgba(255,255,255,0.7)"
-                        returnKeyType="next"
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        onChangeText={(text) => this.validate(text)}
+                        value={this.state.TextInputEmail}                        
+                        onChangeText={this.updateEmailText}
                         style={styles.input} />
                     <TouchableHighlight>
                         <View style={styles.passwordViewContainer}>
                             <TextInput                                 
                                 placeholder="Senha"
                                 placeholderTextColor="rgba(255,255,255,0.7)"                                
-                                value={this.state.password}
+                                value={this.state.TextInputPassword}
                                 onChangeText={this.handlePassword}
                                 secureTextEntry={this.state.showPassword}
                                 width={SCREEN_WIDTH - 100}

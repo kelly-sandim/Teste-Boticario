@@ -56,28 +56,43 @@ export default class Register extends Component{
         this.setState(newState);        
     };    
 
-    validate = (text) => {
+    updateEmailText = (text) => {  
+        console.log(text);      
+        let newState = {
+            TextInputEmail: text
+        }
+        this.setState(newState);        
+    };
+
+    validate = () => {
+        let text = this.state.TextInputEmail;
         console.log(text);
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(text) === false) {
-          console.log("Email is Not Correct");
-          this.setState({ TextInputEmail: text })
+        if (reg.test(String(text).toLowerCase()) === false) {
+          console.log("Email is Not Correct");          
           return false;
         }
-        else {
-          this.setState({ TextInputEmail: text })
+        else {          
           console.log("Email is Correct");
+          return true;
         }
-    }
+    };
     
     checkTextInput = () => {
         //Handler for the Submit onPress
         if(this.state.TextInputName != '') {
             if (this.state.TextInputEmail != '') {          
-                if (this.state.TextInputPassword != '') {
-                    this.props.navigation.navigate('Login');
-                } else {
-                    Alert.alert('Erro!', 'Por favor, preencha o campo de senha!');
+                if(this.validate())
+                {
+                    if (this.state.TextInputPassword != '') {
+                        this.props.navigation.navigate('Login');
+                    } else {
+                        Alert.alert('Erro!', 'Por favor, preencha o campo de senha!');
+                    }
+                }
+                else
+                {
+                    Alert.alert('Erro!', 'Por favor, preencha um e-mail válido!');
                 }
             } else {
                 Alert.alert('Erro!', 'Por favor, preencha o campo de e-mail!');
@@ -106,7 +121,8 @@ export default class Register extends Component{
                         style={styles.input}
                     />
                     <TextInput 
-                        onChangeText={(text) => this.validate(text)}
+                        value={this.state.TextInputEmail}                        
+                        onChangeText={this.updateEmailText}
                         placeholder="E-mail"
                         placeholderTextColor="rgba(255,255,255,0.7)"
                         returnKeyType="next"
@@ -119,7 +135,7 @@ export default class Register extends Component{
                             <TextInput                                 
                                 placeholder="Senha"
                                 placeholderTextColor="rgba(255,255,255,0.7)"                                
-                                value={this.state.password}
+                                value={this.state.TextInputPassword}
                                 onChangeText={this.handlePassword}
                                 secureTextEntry={this.state.showPassword}
                                 width={SCREEN_WIDTH - 100}
