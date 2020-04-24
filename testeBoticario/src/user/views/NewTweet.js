@@ -59,8 +59,7 @@ export default class ReplyComponent extends Component {
                         style={[styles.input, {borderBottomColor: isFocused ? 'rgb(29, 161, 242)':'rgb(136, 153, 166)',}]}
 
                         placeholder="No que você está pensando agora?"
-                        placeholderTextColor="rgb(136, 153, 166)"
-                        onChangeText={this.onChangeText.bind(this)}
+                        placeholderTextColor="rgb(136, 153, 166)"                        
                     />
                     <Text style={styles.counterText}>                         
                         {this.state.textLength}/280 
