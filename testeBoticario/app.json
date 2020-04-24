@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "HelloWorld",
+    "name": "BotTwitter",
     "slug": "testeBoticario",
     "platforms": [
       "ios",
@@ -23,7 +23,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.testeboticario.bottwitter",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.testeboticario.bottwitter",
+      "versionCode": 1
     }
   }
 }
