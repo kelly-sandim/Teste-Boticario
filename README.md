@@ -43,6 +43,13 @@ colegas;
 
 **OBS:** Tentei implementar boas práticas da arquitetura DDD, assim como _Clean Code_
 
-### **Screenshots**
-
+### **Algumas Screenshots**
+![Tela de Splash](https://i.imgur.com/PcmywSw.jpg)
+![Tela de Login](https://i.imgur.com/FDdfteR.jpg)
+![Tela de Registro](https://i.imgur.com/B1FaeSw.jpg)
+![HomeScreen](https://i.imgur.com/q6BJeuh.jpg)
+![Tela de Perfil](https://i.imgur.com/M6Nx72B.jpg)
+![Tela de Novo Tweet](https://i.imgur.com/A2rJDzs.jpg)
+![Validação de Email](https://i.imgur.com/9YVOyz3.jpg)
+![Validação de campos](https://i.imgur.com/FnYAbD7.jpg)
 
