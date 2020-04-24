@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Animated, Image, Platform, StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, StatusBar } from 'react-native';
-import { DrawerActions} from '@react-navigation/native';
 
 import ListView from "deprecated-react-native-listview";
 
 import axios from "axios";
+
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import Tweet from './Tweet';
 
@@ -125,9 +126,7 @@ export default class Home extends Component {
 
   }
 
-  clickHandler = () => {
-    //function to handle click on floating Action Button
-    //Alert.alert('Floating Button Clicked');
+  clickHandler = () => {    
     this.props.navigation.navigate('NewTweet');
   };
 
@@ -173,30 +172,30 @@ export default class Home extends Component {
         </View> 
     }
         <Animated.View style={[styles.navbar, { transform: [{ translateY: navbarTranslate }] }]}>
-        <TouchableOpacity style={styles.avatar}>
-          <Image
-          onPress={() => //this.props.dispatch(DrawerActions.openDrawer()) 
-                      this.props.navigation.navigate('Profile')}
-          source={require('../../../assets/images/avatar.png')}
-          style={{width:35,height:35, borderRadius:50,marginTop:5,marginLeft:25}}
+          <TouchableOpacity style={styles.avatar}>
+            <Image
+            onPress={() => 
+                        this.props.navigation.navigate('Profile')}
+            source={require('../../../assets/images/avatar.png')}
+            style={{width:35,height:35, borderRadius:50,marginTop:5,marginLeft:25}}
+            />
+          </TouchableOpacity>
+          <Animated.View>
+            <Animated.Text style={[styles.title, { opacity: navbarOpacity }]}>
+              Página Inicial
+            </Animated.Text>
+            </Animated.View>
+          <FontAwesome size={25} name="power-off" style={styles.logoutIcon}
+            onPress={() => 
+                      this.props.navigation.navigate('Login')}
           />
-        </TouchableOpacity>
-        <Animated.View>
-          <Animated.Text style={[styles.title, { opacity: navbarOpacity }]}>
-            Página Inicial
-          </Animated.Text>
-          </Animated.View>
         </Animated.View>
         <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={this.clickHandler}
                 style={styles.TouchableOpacityStyle}>
-                <Image
-                  //We are making FAB using TouchableOpacity with an image
-                  //We are using online image here
-                  source={require('../../../assets/images/newPost.png')}
-                  //You can use you project image Example below
-                  //source={require('./images/float-add-icon.png')}
+                <Image                  
+                  source={require('../../../assets/images/newPost.png')}                  
                   style={styles.FloatingButtonStyle}
                 />
           </TouchableOpacity>
@@ -270,5 +269,11 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     //backgroundColor:'black'
+  },
+  logoutIcon: {
+    color: "#E53935",
+    position: "absolute",
+    top: 20,
+    right: 20
   },
 });
